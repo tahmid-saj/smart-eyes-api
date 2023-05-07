@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt-nodejs');
+const cors = require("cors");
 
 const saltRounds = 10;
 const myPlaintextPassword = 's0/\/\P4$$w0rD';
@@ -21,6 +22,7 @@ const someOtherPlaintextPassword = 'not_bacon';
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 const database = {
     users: [
@@ -48,9 +50,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/signin", (req, res) => {
-    bcrypt.compare("bacon", hash, function(err, res) {
-        console.log("first guess", res);
-    });
+    // bcrypt.compare("bacon", hash, function(err, res) {
+    //     console.log("first guess", res);
+    // });
 
     if (req.body.email === database.users[0].email && req.body.password === database.users[0].password) {
         res.json("success");
