@@ -5,17 +5,30 @@ const cors = require("cors");
 
 const knex = require("knex");
 
-const postgres = knex({
+// const db = knex({
+//     client: 'pg',
+//     connection: {
+//         host: '127.0.0.1',
+//         user: 'tahmidsaj',
+//         password: "",
+//         database: 'smart-eyes'
+//     }
+// });
+
+const db = knex({
     client: 'pg',
     connection: {
-        host: '127.0.0.1',
-        user: 'tahmidsaj',
-        password: '',
-        database: 'smart-eyes'
+      host : '127.0.0.1',
+      port : 5432,
+      user : 'postgres',
+      password : 'test',
+      database : 'smart-eyes'
     }
-});
+  });
 
-console.log(postgres.select("*").from('users'));
+// db.select("*").from("users").then(data => {
+//     console.log(data);
+// });
 
 const saltRounds = 10;
 const myPlaintextPassword = 's0/\/\P4$$w0rD';
@@ -82,13 +95,19 @@ app.post("/register", (req, res) => {
     //     console.log(hash);
     // });
 
-    database.users.push({
-        id: '123',
-        name: name,
+    // database.users.push({
+    //     id: '123',
+    //     name: name,
+    //     email: email,
+    //     entries: 0,
+    //     joined: new Date(),
+    // });
+
+    db("users").insert({
         email: email,
-        entries: 0,
-        joined: new Date(),
-    });
+        name: name,
+        joined: new Date()
+    }).then(console.log);
 
     res.json(database.users[database.users.length - 1]);
 });
