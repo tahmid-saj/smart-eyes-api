@@ -121,7 +121,7 @@ app.post("/register", (req, res) => {
         joined: new Date()
     })
     .then(user => {
-        res.json(user[0]);
+        res.json(user[0].name);
     })
     .catch(err => {
         res.status(400).json('Unable to register');
@@ -131,13 +131,15 @@ app.post("/register", (req, res) => {
 app.get("/profile/:id", (req, res) => {
     const { id } = req.params;
 
-    db.select("*").from("users")
+    db("users")
+    .select("*")
+    .from("users")
     .where({
         id: id
     })
     .then(user => {
         if (user.length) {
-            res.json(user[0]);
+            res.json(user[0].id);
         } else {
             res.status(400).json('User not found');
         }
@@ -149,20 +151,17 @@ app.get("/profile/:id", (req, res) => {
 
 app.put("/image", (req, res) => {
     const { id } = req.body;
-    let found = false;
 
-    database.users.forEach(user => {
-
-        if (user.id === id) {
-            found = true;
-            user.entries++;
-            return res.json(user.entries);
-        } 
+    db("users")
+    .where("id", "=", id)
+    .increment("entries", 1)
+    .returning("entries")
+    .then(entries => {
+        res.json(entries[0].entries);
+    })
+    .catch(err => {
+        res.status(400).json("Unable to get entries");
     });
-
-    if (!found) {
-        res.status(400).json("not found");
-    }
 });
 
 app.listen(3000, () => {
