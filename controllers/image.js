@@ -1,3 +1,5 @@
+const Clarifai = require("clarifai");
+
 const handleImage = (req, res, db) => {
     const { id } = req.body;
 
