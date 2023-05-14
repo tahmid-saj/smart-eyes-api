@@ -5,18 +5,6 @@ const handleRegister = (req, res, db, bcrypt) => {
         return res.status(400).json("Incorrect form submission");
     }
 
-    // bcrypt.hash(password, null, null, function(err, hash) {
-    //     console.log(hash);
-    // });
-
-    // database.users.push({
-    //     id: '123',
-    //     name: name,
-    //     email: email,
-    //     entries: 0,
-    //     joined: new Date(),
-    // });
-
     const hash = bcrypt.hashSync(password);
 
     db.transaction(trx => {

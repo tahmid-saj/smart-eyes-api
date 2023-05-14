@@ -21,16 +21,6 @@ const { handleSignin } = require("./controllers/signin");
 // create table users (id serial primary key, name varchar(255), email varchar(255));
 // insert into users (name, email) values ('john', 'john@doe.com);
 
-// const db = knex({
-//     client: 'pg',
-//     connection: {
-//         host: '127.0.0.1',
-//         user: 'tahmidsaj',
-//         password: "",
-//         database: 'smart-eyes'
-//     }
-// });
-
 const db = knex({
     client: 'pg',
     connection: {
@@ -42,51 +32,10 @@ const db = knex({
     }
   });
 
-// db.select("*").from("users").then(data => {
-//     console.log(data);
-// });
-
-const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
-
-// bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-//     // Store hash in your password DB.
-// });
-
-// // Load hash from your password DB.
-// bcrypt.compare(myPlaintextPassword, hash, function(err, result) {
-//     // result == true
-// });
-// bcrypt.compare(someOtherPlaintextPassword, hash, function(err, result) {
-//     // result == false
-// });
-
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
-
-// const database = {
-//     users: [
-//         {
-//             id: '123',
-//             name: 'John',
-//             email: 'john@gmail.com',
-//             password: 'cookies',
-//             entries: 0,
-//             joined: new Date(),
-//         },
-//         {
-//             id: '123',
-//             name: 'Sally',
-//             email: 'sally@gmail.com',
-//             password: 'bananas',
-//             entries: 0,
-//             joined: new Date(),
-//         }
-//     ]
-// };
 
 app.get("/", (req, res) => {
     res.send("Success");

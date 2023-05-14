@@ -1,8 +1,4 @@
 const handleSignin = (req, res, db, bcrypt) => {
-    // bcrypt.compare("bacon", hash, function(err, res) {
-    //     console.log("first guess", res);
-    // });
-
     const { email, password } = req.body;
 
     if (!email || !password) {
